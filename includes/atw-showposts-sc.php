@@ -50,7 +50,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
 
         $filter = atw_posts_get_slider_opt( 'selected_slider_filter', $slider);
         if ($filter == '')
-            $fliter = 'default';
+            $filter = 'default';
 
         if ( atw_posts_get_filter_opt( 'slug', $filter) != $filter ) {
             return '<strong>ERROR with [show_posts slider="' . $slider . '"]: Filter (' . $filter . ') is not a defined filter.</strong>';
@@ -135,10 +135,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
 
     if ( $slider ) {
         $style = '';
-        //$margin = atw_posts_get_slider_opt( 'slideMargin', $slider );
-        //if ($margin != '')
-         //   $style = ' style="margin:' . $margin . 'em;"';
-
+        
         $slide_li_begin = '<div class="atwk-slide"><div class="slide-content slide-post"' . $style . '>' . "\n";
         $slide_li_end = "\n</div></div><!-- slide-content slide-post -->\n";
     }
@@ -154,12 +151,15 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
 
     $posts_out = 0;
     $col = 0;
+    if ( !$ourposts->have_posts() ) {
+        echo __('No posts found.', 'atw_showposts');
+    }
     while ( $ourposts->have_posts() ) {
         $ourposts->the_post();
         $posts_out++;
 
         echo $slide_li_begin;
-        
+
         // aspen_per_post_style();
         if ($show == 'titlelist') {
     ?>

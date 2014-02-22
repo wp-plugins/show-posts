@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: weaver theme, settings, save, subthemes
 Requires at least: 3.6
 Tested up to: 3.8
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 == Description ==
 
@@ -55,6 +55,15 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 == Changelog ==
 
-= 0.9 =
+= 1.0.2 =
+* Revised plugin description
+* Fixed bug with blank show slider filter specification
+* Added "No posts found." message if no posts are found.
+* Fixed bug with shortcode support for text widgets
 
-First release.
+
+= 1.0 & 1.0.1 =
+* The need for 1.0.1 was because the 1.0 upload to wordpress.org failed.
+
+= 0.9 =
+* First release.
