@@ -1,11 +1,10 @@
 <?php
 /*
 Plugin Name: ATW Show Posts
-Plugin URI: http://aspentheme.com/plugins/aspen-shortcodes-and-widgets/
-Description: Aspen Themeworks Show Posts - the ultimate Show Posts Plugin. Show any posts or custom posts within your Theme's pages or posts using a shortcode. Posts can use native theme post display for many compatible themes, or be displayed by the plugin's own post display functions. Post style can be custom styled to match any theme. Total flexibility to define which posts will be displayed. Turns WordPress into an complete CMS system. This plugin is the partner plugin to ATW Show Sliders, and amazing responsive Slider plugin that can display Images, Galleries, and even regular posts in a wide variety of slider styles.
-Author: wpweaver
+Plugin URI: http://AspenThemeworks.com/
+Description: Aspen Themeworks Show Posts - the ultimate Show Posts Plugin. Show  posts or custom posts within your Theme's pages or posts using a shortcode. The form-based admin interface allows easy specification of which posts are to be displayed. Show Posts can use the native post display function of many themes, and has a built-in function that can be easily styled with CSS_Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.0.1
+Version: 1.0.2
 
 License: GPL
 
@@ -34,7 +33,7 @@ function atw_showposts_installed() {
     return true;
 }
 
-define ( 'ATW_SHOWPOSTS_VERSION','1.0.1');
+define ( 'ATW_SHOWPOSTS_VERSION','1.0.2');
 define ( 'ATW_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 
 // ===============================>>> REGISTER ACTIONS <<<===============================
@@ -239,7 +238,7 @@ function atw_posts_setup_shortcodes() {
     add_shortcode('show_posts','atw_show_posts_sc');
 
     if ( function_exists('atw_posts_getopt') && atw_posts_getopt( 'textWidgetShortcodes' ) ) {
-        addfilter('widget_text', 'atw_post_text_widget_shortcode' );
+        add_filter('widget_text', 'atw_post_text_widget_shortcode' );
     }
 }
 
