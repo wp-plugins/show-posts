@@ -1,10 +1,11 @@
 <?php
 /*
 Plugin Name: ATW Show Posts
-Plugin URI: http://AspenThemeworks.com/
-Description: Aspen Themeworks Show Posts - the ultimate Show Posts Plugin. Show  posts or custom posts within your Theme's pages or posts using a shortcode. The form-based admin interface allows easy specification of which posts are to be displayed. Show Posts can use the native post display function of many themes, and has a built-in function that can be easily styled with CSS_Author: wpweaver
+Plugin URI: http://AspenThemeworks.com/atw-show-posts
+Description: Aspen Themeworks Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
+Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.0.2
+Version: 1.0.3
 
 License: GPL
 
@@ -29,18 +30,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-function atw_showposts_installed() {
-    return true;
-}
-
-define ( 'ATW_SHOWPOSTS_VERSION','1.0.2');
+define ( 'ATW_SHOWPOSTS_VERSION','1.0.3');
 define ( 'ATW_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 
 // ===============================>>> REGISTER ACTIONS <<<===============================
 
+add_action( 'plugins_loaded', 'atw_posts_plugins_loaded');
+
+    function atw_posts_plugins_loaded() {
+
+        function atw_showposts_installed() {
+        return true;
+    }
 
     add_action( 'media_buttons', 'atw_posts_add_form_buttons', 20 );
-
+    add_action('admin_menu', 'atw_posts_admin_menu');
+    add_action('wp_enqueue_scripts', 'atw_posts_enqueue_scripts' );
+    add_action('template_redirect', 'atw_posts_emit_css' );
+    add_action('init', 'atw_posts_setup_shortcodes');  // allow shortcodes to load after theme has loaded so we know which version to use
+}
 
 // ===============================>>> DEFINE ACTIONS <<<===============================
 
@@ -162,7 +170,6 @@ function atw_posts_admin_menu() {
     add_action('admin_print_styles-'.$page, 'atw_posts_admin_scripts');
 }
 
-add_action('admin_menu', 'atw_posts_admin_menu');
 
 function atw_posts_admin_scripts() {
     /* called only on the admin page, enqueue our special style sheet here (for tabbed pages) */
@@ -180,7 +187,6 @@ function atw_posts_plugins_url($file,$ext='') {
 
 // ############
 
-add_action('wp_enqueue_scripts', 'atw_posts_enqueue_scripts' );
 
 function atw_posts_enqueue_scripts() {	// enqueue runtime scripts
 
@@ -227,11 +233,9 @@ function atw_posts_emit_css() {
 	}
 }
 
-add_action( 'template_redirect', 'atw_posts_emit_css' );
 
 // ############
 
-add_action('init', 'atw_posts_setup_shortcodes');  // allow shortcodes to load after theme has loaded so we know which version to use
 
 function atw_posts_setup_shortcodes() {
     remove_shortcode('show_posts');                         // alias

@@ -5,6 +5,7 @@ function atw_posts_filters_admin() {
     <h2 style="color:blue;">Create and Define Filters</h2>
     <form method="post">
         <input type="hidden" name="atw_posts_save_filter_opts" value="Filter Options Saved" />
+        <input style="display:none;" type="submit" name="atw_stop_enter" value="Ignore Enter"/>
 
 <?php
     //settings_fields( 'atw_posts_opt_group' );
@@ -200,7 +201,7 @@ function atw_posts_define_display() {
 	<option value="title" <?php selected( $cur_show == 'title');?>>Title + Top Meta Line</option>
     <option value="titlelist" <?php selected( $cur_show == 'titlelist');?>>Title only as list</option>
     <option value="title_featured" <?php selected( $cur_show == 'title_featured');?>>Title + Featured Image</option>
-	</select> &nbsp;How to display posts - (Default: full post)
+	</select> &nbsp;How to display posts - (Default: full post; Weaver/Aspen: theme settings)
     </div>
 
 
@@ -521,15 +522,16 @@ function atw_posts_set_post_slug() {
 
 <div class="filter-section">
 
-<div class="filter-title">&bull; By Page Slug <span class="filter-title-description">Include only post with this page slug</span></div>
+<div class="filter-title">&bull; By Post Slug <span class="filter-title-description">Include only post with this title slug</span></div>
 
     <div class="filter-opts">
 <textarea class="filter-text" cols=40 rows=1 placeholder="page-title-slug" maxlength=512 name="post_slug"><?php echo sanitize_text_field(atw_posts_get_filter_opt('post_slug')); ?></textarea>
 
     </div>
 <div class="filter-description">
-    This option will display a single page with the specified slug - usually automatically generated from the page's title.
-    If this a post from a custom page type, you need to specify that in the "Post Type" setting. Other selection options are ignored.
+    This option will display a single post with the specified slug - usually automatically generated from the posts's title.
+    If this is a post from a custom post type, you need to specify that in the "Post Type" setting. Other selection options are ignored.
+    This is the WP_Query 'name' argument.
 </div>
 
 <div style="clear:both;"></div>

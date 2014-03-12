@@ -12,6 +12,8 @@ function atw_posts_help_admin() {
 <h2 style="color:blue;text-decoration:underline;">Show Posts Quick Start</h2>
 <p style="color:green;font-weight:bold;font-size:140%;">
     <?php echo $title; ?> <a href="<?php echo $t_dir; ?>" target="_blank" title="ATW Plugins Help File">Help Document</a>
+    <span style="font-size:80%;margin-left:20px;">Visit the official
+    <a href="http://forum.weavertheme.com/categories/atw-show-posts-and-atw-show-sliders" target="_blank">help forum.</a></span>
 </p>
 <p>
     The Aspen Themeworks <code>[show_posts]</code> shortcode allows you to display posts on your pages or in a text widget
