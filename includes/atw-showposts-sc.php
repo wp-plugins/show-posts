@@ -26,7 +26,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
         'hide_featured_image' => '',  // hide featured image - FI is displayed by default
         'hide_title' => '',			// hide the title?
         'hide_top_info' => '',		// hide the top info line
-	    'show' => 'full',			// show: title | excerpt | full | titlelist | title_featured
+	    'show' => '',			// show: title | excerpt | full | titlelist | title_featured
 	    'show_avatar' => false,		// show the author avatar
 	    'more_msg' => '',			// replacement for Continue Reading excerpt message
 	    'use_paging' =>  false      // Use paging when displaying multiple posts
@@ -86,7 +86,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
 
     atw_trans_set('showposts',true);	// global to see if we are in this function
 
-    atw_trans_set('show',$show);		// this will always be set
+    atw_trans_set('show',$show);		// this will always be set - but '' (blank) implies 'full' for built-in, but not Weaver/Aspen settings for them
 
     if ($hide_title != '') atw_trans_set('hide_title',true);
     if ($hide_top_info != '') atw_trans_set('hide_top_info',true);
@@ -135,7 +135,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
 
     if ( $slider ) {
         $style = '';
-        
+
         $slide_li_begin = '<div class="atwk-slide"><div class="slide-content slide-post"' . $style . '>' . "\n";
         $slide_li_end = "\n</div></div><!-- slide-content slide-post -->\n";
     }

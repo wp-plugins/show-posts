@@ -1,11 +1,11 @@
-=== Show Posts ===
+=== ATW Show Posts ===
 Contributors: wpweaver
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: weaver theme, settings, save, subthemes
 Requires at least: 3.6
-Tested up to: 3.8
-Stable tag: 1.0.2
+Tested up to: 3.9
+Stable tag: 1.0.3
 
 == Description ==
 
@@ -54,6 +54,10 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.0.3 =
+* Fixed show='' (blank) to work with Weaver/Aspen correctly
+* Fixed wording on the "By Post Slug" option
+* Fixed "Enter/Submit" on "text" input
 
 = 1.0.2 =
 * Revised plugin description
