@@ -259,6 +259,8 @@ function atw_show_content( $slider ) {
 
     $sticky = is_sticky( $cur_post_id );
 
+    do_action('atw_show_sliders_post_pager', $slider);
+
     if ( ( !atw_posts_getopt('ignore_aspen_weaver') && (atw_posts_is_aspen() || atw_posts_is_wii()) )
         || (atw_posts_getopt('use_native_theme_templates') && atw_posts_theme_has_templates())
        ) {
