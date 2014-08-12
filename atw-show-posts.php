@@ -5,12 +5,12 @@ Plugin URI: http://AspenThemeworks.com/atw-show-posts
 Description: Aspen Themeworks Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
 Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.0.4
+Version: 1.0.5
 
 License: GPL
 
 Aspen Themeworks Show Posts
-Copyright (C) 2013, Bruce E. Wampler - aspen@aspenthemeworks.com
+Copyright (C) 2014, Bruce E. Wampler - aspen@aspenthemeworks.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-define ( 'ATW_SHOWPOSTS_VERSION','1.0.4');
+define ( 'ATW_SHOWPOSTS_VERSION','1.0.5');
 define ( 'ATW_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 
 // ===============================>>> REGISTER ACTIONS <<<===============================
@@ -245,6 +245,7 @@ function atw_posts_setup_shortcodes() {
         add_filter('widget_text', 'atw_post_text_widget_shortcode' );
     }
 }
+
 
 function atw_post_text_widget_shortcode( $text ) {
     return do_shortcode( $text );

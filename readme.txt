@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: weaver theme, settings, save, subthemes
 Requires at least: 3.6
 Tested up to: 3.9
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 
 == Description ==
 
@@ -54,6 +54,9 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.0.5=
+* Added support for Weaver X
+
 = 1.0.4 =
 * Added support for sliding pagers for [ show_sliders ] Posts sliders
 
