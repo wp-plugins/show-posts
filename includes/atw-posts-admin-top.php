@@ -128,23 +128,6 @@ function atw_posts_admin_page() {
 
 // ========================================= FORM DISPLAY ===============================
 
-function atw_swp_value_row($th,$id,$desc,$width='') {
-    $style = '';
-    if ($width != '') {
-        $style = ' style="width:' . $width . ';"';
-    }
-?>
-    <tr>
-	<th scope="row" align="right"<?php echo $style . '>' . $th; ?>:&nbsp;</th>
-	<td>
-	    <input type="text" style="width:60px;height:22px;" class="regular-text" name="<?php echo $id; ?>"
-                id="<?php echo $id; ?>" value="<?php sanitize_text_field(weaverii_pro_getopt($id)); ?>" />
-	</td>
-	<td style="padding-left: 10px"><small><?php echo $desc; ?></small></td>
-    </tr>
-<?php
-}
-
 
 function atw_posts_t_($s) {
     return $s;
@@ -333,11 +316,20 @@ function atw_posts_save_filter_opts($show_message = true) {
     $text_opts = array (
         'post_type', 'category_name', 'tag', 'author', 'taxonomy', 'date', 'atw_slider_group', 'wp_query_args', 'cols',
         'show', 'orderby', 'order', 'posts_per_page', 'offset', 'more_msg', 'post_slug', 'post_ids', 'excerpt_length',
+        'post_template'
     );
 
     foreach ($text_opts as $opt) {
         $val = sanitize_text_field( atw_posts_get_POST( $opt ) );
         atw_posts_set_filter_opt( $opt, $val );
+    }
+
+    if ( atw_posts_get_POST( 'post_template' ) != '' ) {  // template specified
+        $val = wp_check_invalid_utf8( trim(atw_posts_get_POST( 'post_template' )) );
+
+        if ( current_user_can('unfiltered_html') ) {
+            atw_posts_set_filter_opt('post_template',  $val);
+        }
     }
 
     // **** check boxes

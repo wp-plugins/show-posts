@@ -354,13 +354,17 @@ function atw_posts_is_aspen() {
     return function_exists( 'aspen_setup' );
 }
 
+function atw_posts_is_wvrx() {
+    return function_exists( 'weaverx_setup' );
+}
+
 function atw_posts_is_wii() {
     return function_exists( 'weaverii_setup' );
 }
 
 function atw_posts_is_generic() {
     // version for a generic theme
-    return !function_exists( 'aspen_setup' ) && !function_exists( 'weaverii_setup' );
+    return !function_exists( 'weaverx_setup') && !function_exists( 'aspen_setup' ) && !function_exists( 'weaverii_setup' );
 }
 
 function atw_posts_theme_has_templates() {
@@ -372,8 +376,8 @@ function atw_posts_theme_has_templates() {
 
 // ====================================== >>> transient options <<< ======================================
 
-if (!function_exists('atw_tran_globals')) {
-function atw_tran_globals($glb = 'aspen_temp_opts') {
+if (!function_exists('atw_trans_globals')) {
+function atw_trans_globals($glb = 'aspen_temp_opts') {
     return isset($GLOBALS[$glb]) ? $GLOBALS[$glb] : '';
 }
 }

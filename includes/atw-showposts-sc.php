@@ -154,6 +154,10 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
     if ( !$ourposts->have_posts() ) {
         echo __('No posts found.', 'atw_showposts');
     }
+
+    if ( atw_posts_get_filter_opt('post_template', $filter) )
+        require_once(dirname( __FILE__ ) . '/atw-posts-template.php'); // NOW - load the template code
+
     while ( $ourposts->have_posts() ) {
         $ourposts->the_post();
         $posts_out++;
@@ -170,7 +174,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
             switch ($cols) {
                 case 2:
                     echo ('<div class="atw-content-2-col atw-cf">' . "\n");
-                    atw_show_content( $slider );
+                    atw_show_content( $slider, $filter);
                     echo ("</div> <!-- atw-content-2-col -->\n");
                     $col++;
                     if ( !($col % 2) ) {	// force stuff to be even
@@ -179,7 +183,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
                     break;
                 case 3:
                     echo ('<div class="atw-content-3-col atw-cf">' . "\n");
-                    atw_show_content( $slider );
+                    atw_show_content( $slider, $filter );
                     echo ("</div> <!-- atw-content-3-col -->\n");
                     $col++;
                     if ( !($col % 3) ) {	// force stuff to be even
@@ -188,7 +192,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
                     break;
                 case 1:
                 default:
-                    atw_show_content( $slider );
+                    atw_show_content( $slider, $filter );
                     break;
                 }	// end switch $cols
         }
@@ -249,7 +253,7 @@ function atw_posts_excerpt_length_filter( $length ) {
 
 // ====================================== >>> atw_show_content <<< ======================================
 
-function atw_show_content( $slider ) {
+function atw_show_content( $slider, $filter = '' ) {
 
     $cur_post_id = get_the_ID();
 
@@ -261,9 +265,10 @@ function atw_show_content( $slider ) {
 
     do_action('atw_show_sliders_post_pager', $slider);
 
-    if ( ( !atw_posts_getopt('ignore_aspen_weaver') && (atw_posts_is_aspen() || atw_posts_is_wii()) )
+    if ( ( !atw_posts_getopt('ignore_aspen_weaver') && (atw_posts_is_wvrx() || atw_posts_is_aspen() || atw_posts_is_wii()) )
         || (atw_posts_getopt('use_native_theme_templates') && atw_posts_theme_has_templates())
        ) {
+
         if ( $sticky ) {
             echo '<div class="sticky">';
         }
@@ -271,6 +276,13 @@ function atw_show_content( $slider ) {
         if ( $sticky ) {
             echo '</div>';
         }
+        return;
+    }
+    
+    $template = atw_posts_get_filter_opt('post_template', $filter);
+
+    if ( $template != '' ) {
+        atw_posts_do_template( $slider, $template );
         return;
     }
 
@@ -385,11 +397,13 @@ function atw_show_content( $slider ) {
 ?>
 		    <span class="comments-link">
 <?php
-		    comments_popup_link( '<span class="leave-reply">' . __( 'Leave a reply','atw-showposts') . '</span><div style="clear:both;"></div>',
-			__( '<b>1</b> Reply','atw-showposts'),
-			__( '<b>%</b> Replies','atw-showposts') );
+		    comments_popup_link( __( 'Leave a reply','atw-showposts'),
+                __( '<b>1</b> Reply','atw-showposts'),
+                __( '<b>%</b> Replies','atw-showposts'),
+                'leave-reply');
 ?>
-		    </span>
+
+		    </span><div style="clear:both;"></div>
 <?php
         } // End if comments_open()
 ?>

@@ -59,6 +59,8 @@ function atw_posts_filters_admin() {
 
     atw_posts_save_filter_button();
 
+    atw_posts_set_custom_template();
+
     atw_posts_nonce_field('atw_posts_save_filter_opts');
 
 ?>
@@ -682,4 +684,41 @@ function atw_posts_set_custom_wpq() {
 <?php
 }
 
+// ========================================= >>> atw_posts_set_custom_wpq <<< ===============================
+
+function atw_posts_set_custom_template() {
+    //<!-- *** Custom Taxonomies *** -->
+
+    if ( !current_user_can('unfiltered_html') )
+        return;     // don't even show
+
+    $text = atw_posts_get_filter_opt('post_template');
+    $rows = 1;
+
+    if (strlen($text) > 0)
+        $lines = count (explode(PHP_EOL, $text));
+    else
+        $lines = 0;
+    if ($lines > 20)
+         $lines = 18;
+    if ($lines > 0)
+        $rows = $lines + 2;
+
+?>
+<!-- *** Custom Post *** -->
+
+<div class="filter-section">
+<div class="filter-title">&bull; Custom Post Template (Advanced Option) <span class="filter-title-description">Define custom template to display posts</span></div>
+
+    <div class="filter-opts">
+
+    <textarea class="filter-text" style="max-width:90%;" cols=100 rows=<?php echo $rows; ?> placeholder="Enter post template" maxlength=2048 name="post_template"><?php echo esc_textarea($text); ?></textarea></td></tr></table>
+    </div>
+<div class="filter-description">
+    <em>This option is intended for advanced users.</em> You can define a completely custom template to display posts.
+    You must read the help file for an explanation of this option.
+</div>
+</div>
+<?php
+}
 ?>
