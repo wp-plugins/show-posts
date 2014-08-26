@@ -371,7 +371,8 @@ function atw_posts_theme_has_templates() {
     // see if the current theme has a content.php template
     $templates = array();
     $templates[] = 'content.php';           // see if the theme has a content.php file, assume it works as expected...
-    return locate_template($templates) != '';
+    $loc = locate_template($templates);
+    return $loc != '';
 }
 
 // ====================================== >>> transient options <<< ======================================
