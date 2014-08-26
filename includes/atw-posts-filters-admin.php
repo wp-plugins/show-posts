@@ -59,7 +59,8 @@ function atw_posts_filters_admin() {
 
     atw_posts_save_filter_button();
 
-    atw_posts_set_custom_template();
+    if (ATW_SHOWPOSTS_TEMPLATE)
+        atw_posts_set_custom_template();
 
     atw_posts_nonce_field('atw_posts_save_filter_opts');
 
@@ -686,7 +687,8 @@ function atw_posts_set_custom_wpq() {
 
 // ========================================= >>> atw_posts_set_custom_wpq <<< ===============================
 
-function atw_posts_set_custom_template() {
+if ( ATW_SHOWPOSTS_TEMPLATE ) {
+    function atw_posts_set_custom_template() {
     //<!-- *** Custom Taxonomies *** -->
 
     if ( !current_user_can('unfiltered_html') )
@@ -720,5 +722,6 @@ function atw_posts_set_custom_template() {
 </div>
 </div>
 <?php
+}
 }
 ?>

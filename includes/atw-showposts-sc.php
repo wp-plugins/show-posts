@@ -155,8 +155,8 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
         echo __('No posts found.', 'atw_showposts');
     }
 
-    if ( atw_posts_get_filter_opt('post_template', $filter) )
-        require_once(dirname( __FILE__ ) . '/atw-posts-template.php'); // NOW - load the template code
+    if ( ATW_SHOWPOSTS_TEMPLATE && atw_posts_get_filter_opt('post_template', $filter) )
+       require_once(dirname( __FILE__ ) . '/atw-posts-template.php'); // NOW - load the template code
 
     while ( $ourposts->have_posts() ) {
         $ourposts->the_post();
@@ -272,18 +272,25 @@ function atw_show_content( $slider, $filter = '' ) {
         if ( $sticky ) {
             echo '<div class="sticky">';
         }
-        get_template_part( 'content', get_post_format() );
+
+        if ( atw_posts_is_wvrx() )
+            get_template_part( 'templates/content', get_post_format() );
+        else
+            get_template_part( 'content', get_post_format() );
+
         if ( $sticky ) {
             echo '</div>';
         }
         return;
     }
-    
-    $template = atw_posts_get_filter_opt('post_template', $filter);
 
-    if ( $template != '' ) {
-        atw_posts_do_template( $slider, $template );
-        return;
+    if ( ATW_SHOWPOSTS_TEMPLATE ) {
+        $template = atw_posts_get_filter_opt('post_template', $filter);
+
+        if ( $template != '' ) {
+            atw_posts_do_template( $slider, $template );
+            return;
+        }
     }
 
 
