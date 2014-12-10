@@ -461,4 +461,5 @@ function atw_show_post_content( $slider ) {
         the_content( $more );
     }
 }
+
 ?>

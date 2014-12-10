@@ -5,7 +5,7 @@ Plugin URI: http://AspenThemeworks.com/atw-show-posts
 Description: Aspen Themeworks Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
 Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.0.6
+Version: 1.0.7
 
 License: GPL
 
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-define ( 'ATW_SHOWPOSTS_VERSION','1.0.6');
+define ( 'ATW_SHOWPOSTS_VERSION','1.0.7');
 define ( 'ATW_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 define ( 'ATW_SHOWPOSTS_TEMPLATE', false);      // future feature
 
@@ -198,10 +198,10 @@ function atw_posts_enqueue_scripts() {	// enqueue runtime scripts
     wp_register_style('atw-posts-style-sheet',atw_posts_plugins_url('atw-posts-style', ATW_SHOWPOSTS_MINIFY.'.css'),null,ATW_SHOWPOSTS_VERSION,'all');
     wp_enqueue_style('atw-posts-style-sheet');
 
-    if ( atw_posts_getopt( 'custom_css' ) != '' ) {
-        wp_register_style( 'atw-posts-custom', '/?atwpostscss=1' );   // @@@@@@@ add some versioning
+    /* if ( atw_posts_getopt( 'custom_css' ) != '' ) {
+        wp_register_style( 'atw-posts-custom', '/?atwpostscss=1' );
         wp_enqueue_style( 'atw-posts-custom' );
-    }
+    } */
 }
 
 // ############ stuff for custom CSS
@@ -216,7 +216,8 @@ function atw_posts_add_trigger( $vars ) {
 	return $vars;
 }
 
-add_filter( 'query_vars','atw_posts_add_trigger' );
+//add_filter( 'query_vars','atw_posts_add_trigger' );
+
 
 /**
  * If trigger (query var) is tripped, load our pseudo-stylesheet
@@ -232,6 +233,24 @@ function atw_posts_emit_css() {
 			echo $content;
 			exit;
 	}
+}
+
+add_action('wp_head', 'atw_posts_wp_head', 20);
+function atw_posts_wp_head() {
+?>
+
+<style type="text/css">
+<?php
+    $css = "/* ATW Show Posts Custom CSS */\n";
+	$css .= atw_posts_getopt( 'custom_css' );
+	$esc_css = esc_html( $css );
+	$content = str_replace( '&gt;', '>', $esc_css ); // put these back
+    $content = str_replace( '&lt;', '<', $esc_css ); // put these back
+	echo $content;
+?>
+
+</style>
+<?php
 }
 
 
