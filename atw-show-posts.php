@@ -5,12 +5,12 @@ Plugin URI: http://AspenThemeworks.com/atw-show-posts
 Description: Aspen Themeworks Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
 Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.0.7
+Version: 1.1
 
 License: GPL
 
 Aspen Themeworks Show Posts
-Copyright (C) 2014, Bruce E. Wampler - aspen@aspenthemeworks.com
+Copyright (C) 2014-2015, Bruce E. Wampler - aspen@aspenthemeworks.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-define ( 'ATW_SHOWPOSTS_VERSION','1.0.7');
+define ( 'ATW_SHOWPOSTS_VERSION','1.1');
 define ( 'ATW_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 define ( 'ATW_SHOWPOSTS_TEMPLATE', false);      // future feature
 
@@ -62,12 +62,12 @@ function atw_posts_add_form_buttons(){
     $page = is_admin() ? get_current_screen() : null;
 
     if(  isset($page) && $page-> id!= 'atw_slider_post'  ) {
-        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-posts-dialog" class="thickbox button" id="add_atw_posts_posts" title="' . __("Add [show_posts]", 'atw-showposts') . '"><span class="atw-slider-media-icon "></span> ' . __("Add [show_posts]", "atw-slider") . '</a>';
+        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-posts-dialog" class="thickbox button" id="add_atw_posts_posts" title="' . __("Add [show_posts]", 'atw-showposts') . '"><span class="dashicons dashicons-admin-post"></span> ' . __("Add [show_posts]", "atw-slider") . '</a>';
         add_action( 'admin_footer', 'atw_posts_select_posts_form' );
     }
 
     if ( function_exists( 'atw_slider_installed') && isset($page) && $page->id != 'atw_slider_post' ) {
-        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-sliders-dialog" class="thickbox button" id="add_atw_slider_slidrs" title="' . __("Add [show_slider]", 'atw-slider') . '"><span class="atw-slider-media-icon "></span> ' . __("Add [show_slider]", "atw-slider") . '</a>';
+        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-sliders-dialog" class="thickbox button" id="add_atw_slider_slidrs" title="' . __("Add [show_slider]", 'atw-slider') . '"><span class="dashicons dashicons-images-alt"></span></span> ' . __("Add [show_slider]", "atw-slider") . '</a>';
         add_action( 'admin_footer', 'atw_posts_select_slider_form' );
     }
 }
@@ -133,20 +133,8 @@ function atw_posts_select_slider_form() {
 */
 function atw_posts_select_scripts_and_styles() {
     wp_enqueue_script( 'atw-posts-editor-buttons', plugins_url( 'js/atw-posts-editor-buttons.js', __FILE__ ), array( 'jquery' ), 1.0, true );
-     echo '<style>.atw-slider-media-icon{
-            background:url(' . plugins_url( 'images/aspen-leaf.png', __FILE__ )  . ') no-repeat top left;
-            display: inline-block;
-            height: 16px;
-            margin: 0 2px 0 0;
-            vertical-align: text-top;
-            width: 16px;
-            }
-         </style>';
 
     //wp_enqueue_style( 'atw-slider-selector-style', plugins_url( 'css/atw-slider-selector-style.css', __FILE__ ));
-
-
-
 }
 // ---------------------------------------------------------------------
 
@@ -158,13 +146,22 @@ function atw_posts_admin() {
 function atw_posts_admin_menu() {
 
     //$page = add_submenu_page('edit.php?post_type=atw_posts_post',
+	$show_slider = false;
+	if ( function_exists('atw_slider_installed') ) {			// for simple case where show_posts gets installed first
+		$show_slider = true;
+	} else {
+		if (!function_exists('is_plugin_active'))
+			include_once (ABSPATH . 'wp-admin/includes/plugin.php');	// need this for is_plugin_active
+		$show_slider = is_plugin_active('show-sliders/atw-show-sliders.php');
+	}
 
-        $menu = function_exists( 'atw_slider_installed' ) ? 'ATW Posts/Slider' : 'ATW Show Posts';
-        $full = function_exists( 'atw_slider_installed' ) ? 'Aspen Show Posts and Show Sliders by Aspen ThemeWorks' : 'Aspen Show Posts by Aspen ThemeWorks';
+    $menu = $show_slider ? 'ATW Posts/Slider' : 'ATW Show Posts';
+    $full = $show_slider ? 'Aspen Show Posts and Show Sliders by Aspen ThemeWorks' : 'Aspen Show Posts by Aspen ThemeWorks';
 
-        $page = add_menu_page(
-	  'Aspen Show Posts by Aspen ThemeWorks', $menu, 'install_plugins',
-      'atw_showposts_page', 'atw_posts_admin',plugins_url( '', __FILE__ ) .'/images/aspen-leaf.png',63);
+    $page = add_menu_page(
+	  'Aspen Show Posts by Aspen ThemeWorks', $menu, 'switch_themes',
+      'atw_showposts_page', 'atw_posts_admin','dashicons-admin-post',63);
+	  //plugins_url( '', __FILE__ ) .'/images/aspen-leaf.png',63);
 
 	/* using registered $page handle to hook stylesheet loading for this admin page */
 
