@@ -4,8 +4,8 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: weaver theme, settings, save, subthemes
 Requires at least: 3.6
-Tested up to: 3.9
-Stable tag: 1.0.7
+Tested up to: 4.1
+Stable tag: 1.1
 
 == Description ==
 
@@ -39,7 +39,6 @@ The form of the shortcode is:
 [show_posts filter=filter-name]
 
 
-
 == Installation ==
 
 Please use the WordPress Plugins:Install page to install this plugin.
@@ -54,6 +53,9 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.1 =
+* Fixed Multi-Site admin menu
+
 = 1.0.7 =
 * Changed to inline CSS over the dynamically generated CSS
 
