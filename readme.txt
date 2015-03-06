@@ -1,15 +1,17 @@
-=== ATW Show Posts ===
+=== Weaver Show Posts ===
 Contributors: wpweaver
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: weaver theme, settings, save, subthemes
 Requires at least: 3.6
 Tested up to: 4.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 == Description ==
 
-This plugin provides a very flexible way to show posts anywhere on a site using a shortcode. It works with any theme. Aspen Themeworks Show Posts is by far the most flexible with an easy to use interface to select which posts to show.
+This plugin provides a very flexible way to show posts anywhere on a site using a shortcode. It works with any theme. Weaver Show Posts is by far the most flexible with an easy to use interface to select which posts to show.
+
+Note: this plugin was formerly named ATW Show Posts. There is no difference in functionality between the versions.
 
 = Easy to select which posts to show =
 
@@ -20,16 +22,16 @@ This plugin provides a powerful interactive admin page that allows you to specif
 
 = Style of Displayed Posts =
 
-ATW Show Posts will normally display posts using its own basic display functions. These can be easily styled to match the rest
+Weaver Show Posts will normally display posts using its own basic display functions. These can be easily styled to match the rest
 of your site by defining Custom CSS rules in the Custom CSS option.
 
-But ATW Show Posts can go way beyond that. For many Themes, you can elect to use the native Theme Post formatting function.
-The posts displayed by Show Posts will match other posts displayed by your theme. If you are using the Aspen or Weaver II
+But Weaver Show Posts can go way beyond that. For many Themes, you can elect to use the native Theme Post formatting function.
+The posts displayed by Show Posts will match other posts displayed by your theme. If you are using the Aspen, Weaver Xtreme, or Weaver II
 themes, there is even more integrated display of posts.
 
 = Show Posts in a Text Widget =
 
-You can add [show_posts] to the standard Text Widget. If your theme or other plugin doesn't add this capability, ATW Show Posts
+You can add [show_posts] to the standard Text Widget. If your theme or other plugin doesn't add this capability, Weaver Show Posts
 includes an option to allow the Text Widget to support shortcodes.
 
 = The Shortcode =
@@ -53,6 +55,13 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.2 =
+* Change: Changed name from Weaver Show Posts to Weaver Show Posts
+* New: Added Save/Restore Filter Settings
+
+= 1.1.1 =
+* Fixed return key behavior on show sliders tab
+
 = 1.1 =
 * Fixed Multi-Site admin menu
 

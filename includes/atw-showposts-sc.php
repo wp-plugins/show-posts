@@ -41,7 +41,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
         unset( $args[ 'slider' ] );
 
         if ( !function_exists('atw_slider_installed')) {
-            return '<strong>ERROR with [show_posts slider="' . $slider . '"]: Aspen Themeworks Slider Plugin not installed.</strong>';
+            return '<strong>ERROR with [show_posts slider="' . $slider . '"]: Weaver Slider Plugin not installed.</strong>';
         }
 
         if ( $slider == '' || atw_posts_get_slider_opt( 'name', $slider ) == '' ) {
@@ -155,7 +155,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
         echo __('No posts found.', 'atw_showposts');
     }
 
-    if ( ATW_SHOWPOSTS_TEMPLATE && atw_posts_get_filter_opt('post_template', $filter) )
+    if ( WEAVER_SHOWPOSTS_TEMPLATE && atw_posts_get_filter_opt('post_template', $filter) )
        require_once(dirname( __FILE__ ) . '/atw-posts-template.php'); // NOW - load the template code
 
     while ( $ourposts->have_posts() ) {
@@ -284,7 +284,7 @@ function atw_show_content( $slider, $filter = '' ) {
         return;
     }
 
-    if ( ATW_SHOWPOSTS_TEMPLATE ) {
+    if ( WEAVER_SHOWPOSTS_TEMPLATE ) {
         $template = atw_posts_get_filter_opt('post_template', $filter);
 
         if ( $template != '' ) {
