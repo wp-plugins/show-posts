@@ -1,9 +1,9 @@
 /*
-Style file for ATW Show Posts
+Style file for Weaver Show Posts
 
 License: GPL V2
 
-Aspen Themeworks Show Posts Shortcode
+Weaver Show Posts Shortcode
 Copyright (C) 2013, Bruce E. Wampler - aspen@aspenthemeworks.com
 
 This program is free software: you can redistribute it and/or modify
@@ -96,6 +96,12 @@ article.atw-post header.atw-entry-header {
 .atw-post .atw-edit-link {
 	clear: both;
 	display: inline;
+}
+
+.atwk-slide .atw-post ol, .atwk-slide .atw-post ul,
+.atw-post ol, .atw-post ul {
+	list-style-position:    outside;
+	margin-left:            1.5em;
 }
 
 /* pagination for show_posts */

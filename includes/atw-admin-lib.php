@@ -26,6 +26,100 @@ function atw_media_lib_button($fillin = '') {
 <?php
 }
 
+// =======================================>>> Save/Restore <<<=================================
+function atw_posts_download_link($desc, $filebase, $ext, $time) {
+	$nonce = wp_create_nonce('show_posts_download');
+
+	$downloader = plugins_url() . '/show-posts/includes/downloader.php';
+	$download_img_path = plugins_url() . '/show-posts/images/download.png';
+	$filename = "{$filebase}-{$time}.{$ext}";
+	$href = $downloader . "?_wpnonce={$nonce}&_ext={$ext}&_file={$filename}";
+?>
+	<a style="margin-left:9em;text-decoration: none;" href="<?php echo esc_url($href); ?>">
+	<span class="download-link"><img src="<?php echo esc_url($download_img_path); ?>" />
+	<?php _e('Download', 'weaver-xtreme' /*adm*/); echo '</span></a> - ';
+    echo $desc; echo ' &nbsp;';
+	echo 'Save as:'; echo ' ' . $filename . "<br /><br />\n";
+}
+
+function atw_posts_restore_filter() {
+	if (!(isset($_POST['uploadit']) && $_POST['uploadit'] == 'yes')) return;
+
+    // upload theme from users computer
+	// they've supplied and uploaded a file
+
+	// echo '<pre>'; print_r($_FILES); echo '</pre>';
+
+	$ok = true;     // no errors so far
+
+	if (isset($_FILES['post_uploaded']['name']))
+		$filename = $_FILES['post_uploaded']['name'];
+	else
+		$filename = "";
+
+	if (isset($_FILES['post_uploaded']['tmp_name'])) {
+		$openname = $_FILES['post_uploaded']['tmp_name'];
+	} else {
+		$openname = "";
+	}
+
+	//Check the file extension
+	$check_file = strtolower($filename);
+	$pat = '.';				// PHP version strict checking bug...
+	$end = explode($pat, $check_file);
+	$ext_check = end($end);
+
+
+	if ($filename == "") {
+		$errors[] = 'You didn\'t select a file to upload.' . "<br />";
+		$ok = false;
+	}
+
+	if (!$ok) {
+		echo '<div id="message" class="updated fade"><p><strong><em style="color:red;">' .
+		'ERROR' . '</em></strong></p><p>';
+		foreach($errors as $error){
+			echo $error.'<br />';
+		}
+		echo '</p></div>';
+	} else {    // OK - read file and save to My Saved Theme
+		// $handle has file handle to temp file.//
+		$contents = file_get_contents($openname);
+
+		if ( ! atw_posts_set_to_serialized_values($contents) ) {
+				echo '<div id="message" class="updated fade"><p><strong><em style="color:red;">' .
+'Sorry, there was a problem uploading your file.
+The file you picked was not a valid Weaver Show Posts settings file.' .
+'</em></strong></p></div>';
+		} else {
+			atw_posts_save_msg( 'Weaver Show Posts set to uploaded Filter.' );
+		}
+	}
+}
+
+function atw_posts_set_to_serialized_values($contents) {
+
+	$restore = unserialize($contents);
+
+	if (!isset($restore['cur_filter']))
+		return false;
+
+	$current_filter = $restore['cur_filter'];
+
+	if (!isset($restore[$current_filter]))
+		return false;
+
+	atw_posts_setopt('current_filter', $current_filter);
+
+	global $atw_posts_opts_cache;
+
+    unset($atw_posts_opts_cache['filters'][$current_filter]);
+
+    $atw_posts_opts_cache['filters'][$current_filter]= $restore[$current_filter];
+    atw_posts_wpupdate_option('atw_posts_settings',$atw_posts_opts_cache);
+
+	return true;
+}
 
 /*
     ================= nonce helpers =====================

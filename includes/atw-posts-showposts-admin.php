@@ -3,8 +3,8 @@
 function atw_posts_showposts_admin() {
     // admin for style options...
 ?>
-   <h2 style="color:blue;">ATW Show Posts</h2>
-    <form method="post">
+   <h2 style="color:blue;">Weaver Show Posts</h2>
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="atw_posts_save_showposts_opts" value="Show Posts Options Saved" />
 <?php
         atw_posts_nonce_field('atw_posts_save_showposts_opts');
@@ -13,7 +13,7 @@ function atw_posts_showposts_admin() {
 <label><span style="color:blue;font-weight:bold; font-size: larger;"><b>Show Posts - [show_posts filter=filter-name]</b></span></label>
 <br />
 <p>
-    The Aspen Themeworks <code>[show_posts]</code> shortcode allows you to display posts on your pages or in a text widget
+    The Weaver <code>[show_posts]</code> shortcode allows you to display posts on your pages or in a text widget
     in the sidebar. You can specify a large number of filtering options to select a specific set of posts to show.
 </p>
 

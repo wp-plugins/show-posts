@@ -15,14 +15,14 @@ require_once(dirname( __FILE__ ) . '/atw-admin-lib.php'); // NOW - load the admi
 function atw_posts_admin_page() {
     atw_posts_submits();
     if ( function_exists('atw_slider_installed')) {
-        $name = 'Show Posts (V ' . ATW_SHOWPOSTS_VERSION . ') &amp; Show Sliders Plugins (V ' . ATW_SLIDER_PI_VERSION . ')';
+        $name = 'Show Posts (V ' . WEAVER_SHOWPOSTS_VERSION . ') &amp; Show Sliders Plugins (V ' . WEAVER_SLIDER_PI_VERSION . ')';
     } else {
-        $name = 'Show Posts Plugin (V ' . ATW_SHOWPOSTS_VERSION . ')';
+        $name = 'Show Posts Plugin (V ' . WEAVER_SHOWPOSTS_VERSION . ')';
     }
 ?>
 
 <div class="atw-wrap">
-    <h2>Aspen Themeworks <?php echo $name;?> - Settings</h2>
+    <h2>Weaver <?php echo $name;?> - Settings</h2>
     <hr />
 
 <div id="tabwrap_plus" style="padding-left:5px;">
@@ -36,7 +36,7 @@ function atw_posts_admin_page() {
     <li><a href="#mt-tab-slider"  title="Slider"><?php echo(atw_posts_t_('Sliders' /*a*/ )); ?></a></li>
 
 <?php   if (function_exists('atw_slider_installed')) { ?>
-    <li><a href="#mt-tab-gallery"  title="[gallery]"><?php echo(atw_posts_t_('[gallery]' /*a*/ )); ?></a></li>
+    <li><a href="#mt-tab-gallery"  title="[gallery]/Lightbox"><?php echo(atw_posts_t_('[gallery]/Lightbox' /*a*/ )); ?></a></li>
 <?php } ?>
 
     <li ><a href="#tab-css" title="Style"><?php echo(atw_posts_t_('Custom CSS' /*a*/ )); ?></a></li>
@@ -147,12 +147,14 @@ function atw_posts_submits() {
                      'atw_posts_add_date', 'atw_posts_add_group', 'atw_posts_hide_category_name',
 
                      'atw_posts_save_filter_opts', 'atw_posts_save_style_opts', 'atw_posts_save_showposts_opts',
+					 'atw_posts_restore_filter'
         );
 
     // need to respond to onchange="this.form.submit()" for 'selected_slider'
     if (atw_posts_get_POST( 'selected_filter')) {
         $new_filter =  atw_posts_get_POST( 'selected_filter');
         $cur_filter =  atw_posts_getopt('current_filter');
+
         if ($cur_filter != $new_filter) {
             atw_posts_set_to_filter( );
             return;
@@ -249,6 +251,10 @@ function atw_posts_set_to_filter() {
     $filters = atw_posts_getopt('filters');
     $found = false;
     foreach ($filters as $filter => $val) {     // display dropdown of available filters
+		if (!isset($filter) || $filter == '') {
+
+		}
+
         if ($filter == $selected) {
             $found = true;
             break;
@@ -303,6 +309,7 @@ function atw_posts_new_filter() {
     atw_posts_save_msg('New Filter Created: "' . $name . '" (Slug: <em>' . $slug . '</em>)');
     return true;
 }
+
 
 // ========================================= >>> atw_posts_save_filter_opts <<< ===============================
 // *******

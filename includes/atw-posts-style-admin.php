@@ -4,7 +4,7 @@ function atw_posts_style_admin() {
     // admin for style options...
 ?>
    <h2 style="color:blue;">Custom CSS Rules</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="atw_posts_save_style_opts" value="Filter Options Saved" />
 <?php
         atw_posts_nonce_field('atw_posts_save_style_opts');

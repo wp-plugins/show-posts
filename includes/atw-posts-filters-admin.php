@@ -3,7 +3,7 @@
 function atw_posts_filters_admin() {
 ?>
     <h2 style="color:blue;">Create and Define Filters</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="atw_posts_save_filter_opts" value="Filter Options Saved" />
         <input style="display:none;" type="submit" name="atw_stop_enter" value="Ignore Enter"/>
 
@@ -59,7 +59,7 @@ function atw_posts_filters_admin() {
 
     atw_posts_save_filter_button();
 
-    if (ATW_SHOWPOSTS_TEMPLATE)
+    if (WEAVER_SHOWPOSTS_TEMPLATE)
         atw_posts_set_custom_template();
 
     atw_posts_nonce_field('atw_posts_save_filter_opts');
@@ -95,10 +95,14 @@ function atw_posts_select_filter() {
 <?php
 
     $filters = atw_posts_getopt('filters');
+	$cur_slug = '';
+	$cur_name = '';
 
     echo '<table><tr><td><strong>Select Filter: </strong></td><td><select name="selected_filter" onchange="this.form.submit()">';
     foreach ($filters as $filter => $val) {     // display dropdown of available filters
         if ($filter == $current_filter) {
+			$cur_slug = $filter;
+			$cur_name = $val['name'];
             echo '<option value="'. $filter . '" selected="selected">' . $val['name'] . ' (' . $filter . ')</option>';
         } else {
             echo '<option value="'. $filter . '">' . $val['name'] .  ' (' . $filter . ')</option>';
@@ -111,8 +115,21 @@ function atw_posts_select_filter() {
                            name="atw_posts_delete_filter" value="Clear/Delete Current Filter"/></td></tr>
     <tr><td>&nbsp;</td><td><span style="padding-left:20px;"></span></span><textarea cols=32 rows=1 placeholder="Enter name for new filter" maxlength=64 name="filter_name"></textarea>
     &nbsp;&nbsp;<input class="button" type="submit" name="atw_posts_new_filter" value="Create New Filter"/></td></tr></table>
+<?php
 
+	$time = date('Y-m-d-Hi');
 
+	echo "<div style='margin-top:6px;'>\n";
+
+	atw_posts_download_link('<strong>Save Settings</strong> for current filter <strong>' . $cur_name . '</strong>.',
+		$cur_slug, 'filter', $time );
+
+?>
+</div>
+	<input style="margin-left:8em;" class="download-link" type="submit" name="atw_posts_restore_filter" value="Restore Filter" />
+	<span style="border:1px solid #CCC;width:400px;padding:2px;"><input name="post_uploaded" type="file" /></span>
+	<input type="hidden" name="uploadit" value="yes" />- Upload file to restore a filter
+<br /><br />
     <div style="clear:both;"></div>
     <div class="filter-title">&bull; Native Theme Support <span class="filter-title-description">Interaction with native theme. Options apply to all filters, but not to image sliders.</span></div>
     <div class="filter-opts">
@@ -120,7 +137,7 @@ function atw_posts_select_filter() {
 <?php
         $native = false;
         if ( !atw_posts_is_generic() ) {
-            atw_posts_form_checkbox('ignore_aspen_weaver','Disable automatic post display integration with Weaver II/Aspen Themes.');
+            atw_posts_form_checkbox('ignore_aspen_weaver','Disable automatic post display integration with Weaver II/Aspen/Weaver Xtreme Themes.');
             $native = true;
         }
         $has_templates = atw_posts_theme_has_templates();
@@ -159,6 +176,7 @@ function atw_posts_select_filter() {
 atw_posts_nonce_field('atw_posts_set_to_filter');
 atw_posts_nonce_field('atw_posts_delete_filter');
 atw_posts_nonce_field('atw_posts_new_filter');
+atw_posts_nonce_field('atw_posts_restore_filter');
 
 }
 
@@ -197,7 +215,7 @@ function atw_posts_define_display() {
 
 
     <div style="padding:1em 0 .5em 4em;text-indent:-1.7em;">Display posts as: &nbsp;&nbsp;
-	<select name="show" >
+	<select name="show">
 	<option value="" <?php selected( $cur_show == '' );?>></option>
 	<option value="full" <?php selected( $cur_show == 'full');?>>Full post</option>
 	<option value="excerpt" <?php selected( $cur_show == 'excerpt');?>>Excerpt</option>
@@ -218,9 +236,9 @@ function atw_posts_define_display() {
         <div class="filter-description">
     <p>
         Use this section to define how each post is to be displayed - title, excerpted, etc. These options apply to how each post is displayed when
-        using the plugin's built-in post layout, or when used with native Weaver II or Aspen Theme layout. Use the Content Selection Filter to define which posts
+        using the plugin's built-in post layout, or when used with native Weaver Xtreme, Weaver II, or Aspen Theme layout. Use the Content Selection Filter to define which posts
         will be displayed. The Slider Image Show options can be used to define how images are used in a image only slide show. (Note: when using the
-        ATW Slider plugin to display an image slider, these Post Display options do not apply.)
+        Weaver Slider plugin to display an image slider, these Post Display options do not apply.)
     </p>
     </div>
 </div>
@@ -414,7 +432,7 @@ function atw_posts_set_slider_group() {
 ?>
 
 <div class="filter-section">
-<div class="filter-title">&bull; Slider Group <span class="filter-title-description">Include posts from these Slider Groups (most useful with ATW Slider plugin)</span></div>
+<div class="filter-title">&bull; Slider Group <span class="filter-title-description">Include posts from these Slider Groups (most useful with Weaver Slider plugin)</span></div>
 
     <div class="filter-opts">
     <table><tr>
@@ -687,7 +705,7 @@ function atw_posts_set_custom_wpq() {
 
 // ========================================= >>> atw_posts_set_custom_wpq <<< ===============================
 
-if ( ATW_SHOWPOSTS_TEMPLATE ) {
+if ( WEAVER_SHOWPOSTS_TEMPLATE ) {
     function atw_posts_set_custom_template() {
     //<!-- *** Custom Taxonomies *** -->
 

@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: ATW Show Posts
-Plugin URI: http://AspenThemeworks.com/atw-show-posts
-Description: Aspen Themeworks Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
+Plugin Name: Weaver Show Posts
+Plugin URI: http://WeaverTheme.com/atw-show-posts
+Description: Weaver Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
 Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.1
+Version: 1.2
 
 License: GPL
 
-Aspen Themeworks Show Posts
+Weaver Show Posts
 Copyright (C) 2014-2015, Bruce E. Wampler - aspen@aspenthemeworks.com
 
 This program is free software: you can redistribute it and/or modify
@@ -30,9 +30,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-define ( 'ATW_SHOWPOSTS_VERSION','1.1');
-define ( 'ATW_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
-define ( 'ATW_SHOWPOSTS_TEMPLATE', false);      // future feature
+define ( 'WEAVER_SHOWPOSTS_VERSION','1.2');
+define ( 'WEAVER_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
+define ( 'WEAVER_SHOWPOSTS_TEMPLATE', false);      // future feature
 
 // ===============================>>> REGISTER ACTIONS <<<===============================
 
@@ -55,7 +55,7 @@ add_action( 'plugins_loaded', 'atw_posts_plugins_loaded');
 
 
 /** --------------------------------------------------------------------------------------------
-* Add the ATW Slider button to the post editor
+* Add the Weaver Slider button to the post editor
 */
 
 function atw_posts_add_form_buttons(){
@@ -155,13 +155,12 @@ function atw_posts_admin_menu() {
 		$show_slider = is_plugin_active('show-sliders/atw-show-sliders.php');
 	}
 
-    $menu = $show_slider ? 'ATW Posts/Slider' : 'ATW Show Posts';
-    $full = $show_slider ? 'Aspen Show Posts and Show Sliders by Aspen ThemeWorks' : 'Aspen Show Posts by Aspen ThemeWorks';
+    $menu = $show_slider ? 'Weaver Posts &amp; Slider Options' : 'Weaver Show Posts Options';
+    $full = $show_slider ? 'Weaver Show Posts and Show Sliders' : 'Weaver Show Posts by Aspen ThemeWorks';
 
     $page = add_menu_page(
-	  'Aspen Show Posts by Aspen ThemeWorks', $menu, 'switch_themes',
+	  'Weaver Show Posts', $menu, 'switch_themes',
       'atw_showposts_page', 'atw_posts_admin','dashicons-admin-post',63);
-	  //plugins_url( '', __FILE__ ) .'/images/aspen-leaf.png',63);
 
 	/* using registered $page handle to hook stylesheet loading for this admin page */
 
@@ -171,10 +170,10 @@ function atw_posts_admin_menu() {
 
 function atw_posts_admin_scripts() {
     /* called only on the admin page, enqueue our special style sheet here (for tabbed pages) */
-    wp_enqueue_style('atw_sw_Stylesheet', atw_posts_plugins_url('/atw-admin-style', ATW_SHOWPOSTS_MINIFY . '.css'), array(), ATW_SHOWPOSTS_VERSION);
+    wp_enqueue_style('atw_sw_Stylesheet', atw_posts_plugins_url('/atw-admin-style', WEAVER_SHOWPOSTS_MINIFY . '.css'), array(), WEAVER_SHOWPOSTS_VERSION);
 
-    wp_enqueue_script('atw_Yetii', atw_posts_plugins_url('/js/yetii/yetii',ATW_SHOWPOSTS_MINIFY.'.js'), array(),ATW_SHOWPOSTS_VERSION);
-    wp_enqueue_script('atw_Admin', atw_posts_plugins_url('/js/atw-posts-admin',ATW_SHOWPOSTS_MINIFY.'.js'), array(), ATW_SHOWPOSTS_VERSION);
+    wp_enqueue_script('atw_Yetii', atw_posts_plugins_url('/js/yetii/yetii',WEAVER_SHOWPOSTS_MINIFY.'.js'), array(),WEAVER_SHOWPOSTS_VERSION);
+    wp_enqueue_script('atw_Admin', atw_posts_plugins_url('/js/atw-posts-admin',WEAVER_SHOWPOSTS_MINIFY.'.js'), array(), WEAVER_SHOWPOSTS_VERSION);
 
 
 }
@@ -192,7 +191,7 @@ function atw_posts_enqueue_scripts() {	// enqueue runtime scripts
 
     // add plugin CSS here, too.
 
-    wp_register_style('atw-posts-style-sheet',atw_posts_plugins_url('atw-posts-style', ATW_SHOWPOSTS_MINIFY.'.css'),null,ATW_SHOWPOSTS_VERSION,'all');
+    wp_register_style('atw-posts-style-sheet',atw_posts_plugins_url('atw-posts-style', WEAVER_SHOWPOSTS_MINIFY.'.css'),null,WEAVER_SHOWPOSTS_VERSION,'all');
     wp_enqueue_style('atw-posts-style-sheet');
 
     /* if ( atw_posts_getopt( 'custom_css' ) != '' ) {
@@ -222,7 +221,7 @@ function atw_posts_add_trigger( $vars ) {
 function atw_posts_emit_css() {
 	if ( intval( get_query_var( 'atwpostscss' ) ) == 1 ) {
 			header( 'Content-type: text/css' );
-            $css = '/* ATW Show Posts Custom CSS */';
+            $css = '/* Weaver Show Posts Custom CSS */';
 			$css .= atw_posts_getopt( 'custom_css' );
 			$esc_css = esc_html( $css );
 			$content = str_replace( '&gt;', '>', $esc_css ); // put these back
@@ -238,7 +237,7 @@ function atw_posts_wp_head() {
 
 <style type="text/css">
 <?php
-    $css = "/* ATW Show Posts Custom CSS */\n";
+    $css = "/* Weaver Show Posts Custom CSS */\n";
 	$css .= atw_posts_getopt( 'custom_css' );
 	$esc_css = esc_html( $css );
 	$content = str_replace( '&gt;', '>', $esc_css ); // put these back
