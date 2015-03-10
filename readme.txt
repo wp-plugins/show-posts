@@ -1,11 +1,14 @@
 === Weaver Show Posts ===
+Plugin Name: Weaver Show Posts
+Plugin URI: http://weavertheme.com/plugins/
+Author URI: http://weavertheme.com/about/
 Contributors: wpweaver
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: weaver theme, settings, save, subthemes
 Requires at least: 3.6
 Tested up to: 4.1
-Stable tag: 1.2
+Stable tag: 1.2.1
 
 == Description ==
 
@@ -55,6 +58,10 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.2.1 =
+* Tweak: change multi-column post display layout to <span> instead of <div> to allow n-th child to work
+* Tweak: add rule for phones and small tablets for multi-column and single column post display depending on device
+
 = 1.2 =
 * Change: Changed name from Weaver Show Posts to Weaver Show Posts
 * New: Added Save/Restore Filter Settings

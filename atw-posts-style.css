@@ -46,6 +46,26 @@ Custom CSS features of on the Show Posts admin page
 	padding-right: 2%;
 }
 
+@media (min-width:581px) and (max-width:767px) {
+.content-2-col,
+.content-3-col {
+	float:          left;
+	width:          49.8%;
+	overflow:       hidden;
+	padding-right:  2%;
+	padding-left:   2%;
+}
+}
+
+@media (max-width:580px) {
+.atw-content-2-col,
+.atw-content-3col {
+	width:          100%;
+	padding-right:  0;
+	padding-left:   0;
+}
+}
+
 .atw-entry-title {
 	clear: both;
 	font-weight: bold;
