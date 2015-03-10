@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: Weaver Show Posts
-Plugin URI: http://WeaverTheme.com/atw-show-posts
+Plugin URI: http://WeaverTheme.com
 Description: Weaver Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
 Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.2
+Version: 1.2.1
 
 License: GPL
 
 Weaver Show Posts
-Copyright (C) 2014-2015, Bruce E. Wampler - aspen@aspenthemeworks.com
+Copyright (C) 2014-2015, Bruce E. Wampler - weaver@weavertheme.com
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-define ( 'WEAVER_SHOWPOSTS_VERSION','1.2');
+define ( 'WEAVER_SHOWPOSTS_VERSION','1.2.1');
 define ( 'WEAVER_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 define ( 'WEAVER_SHOWPOSTS_TEMPLATE', false);      // future feature
 

@@ -178,7 +178,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
                     echo ("</div> <!-- atw-content-2-col -->\n");
                     $col++;
                     if ( !($col % 2) ) {	// force stuff to be even
-                        echo "<div style=\"clear:left;\"></div>\n";
+                        echo "<span style=\"clear:left;\"></span>\n";
                     }
                     break;
                 case 3:
@@ -187,7 +187,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
                     echo ("</div> <!-- atw-content-3-col -->\n");
                     $col++;
                     if ( !($col % 3) ) {	// force stuff to be even
-                        echo "<div style=\"clear:left;\"></div>\n";
+                        echo "<span style=\"clear:left;\"></span>\n";
                     }
                     break;
                 case 1:
