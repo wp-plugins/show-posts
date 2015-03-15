@@ -173,22 +173,26 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
         } else {
             switch ($cols) {
                 case 2:
-                    echo ('<div class="atw-content-2-col atw-cf">' . "\n");
+					$col++;
+					$style = '';
+					if ( ($col % 2) == 1 ) {	// force stuff to be even
+						$style = ' style="clear:left;"';
+					}
+					echo ('<div class="content-2-col atw-cf"' . $style . '>' . "\n");
                     atw_show_content( $slider, $filter);
                     echo ("</div> <!-- atw-content-2-col -->\n");
-                    $col++;
-                    if ( !($col % 2) ) {	// force stuff to be even
-                        echo "<span style=\"clear:left;\"></span>\n";
-                    }
+
                     break;
                 case 3:
-                    echo ('<div class="atw-content-3-col atw-cf">' . "\n");
+                    $col++;
+					$style = '';
+					if ( ($col % 3) == 1 ) {	// force stuff to be even
+						$style = ' style="clear:left;"';
+					}
+					echo ('<div class="content-3-col atw-cf"' . $style . '>' . "\n");
                     atw_show_content( $slider, $filter );
                     echo ("</div> <!-- atw-content-3-col -->\n");
-                    $col++;
-                    if ( !($col % 3) ) {	// force stuff to be even
-                        echo "<span style=\"clear:left;\"></span>\n";
-                    }
+                    
                     break;
                 case 1:
                 default:
