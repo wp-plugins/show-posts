@@ -113,8 +113,9 @@ function atw_posts_select_filter() {
 
     &nbsp;&nbsp;&larr; <input class="button" type="submit" onclick="return confirm('This will clear all current filter settings. The filter will also be deleted unless it is the Default filter. Are you sure?')"
                            name="atw_posts_delete_filter" value="Clear/Delete Current Filter"/></td></tr>
-    <tr><td>&nbsp;</td><td><span style="padding-left:20px;"></span></span><textarea cols=32 rows=1 placeholder="Enter name for new filter" maxlength=64 name="filter_name"></textarea>
-    &nbsp;&nbsp;<input class="button" type="submit" name="atw_posts_new_filter" value="Create New Filter"/></td></tr></table>
+    <tr><td>&nbsp;</td><td><span style="padding-left:20px;"></span></span><textarea cols=32 rows=1 placeholder="Enter name for new/duplicate filter" maxlength=64 name="filter_name"></textarea>
+    &nbsp;&nbsp;&larr;&nbsp;<input class="button" type="submit" name="atw_posts_new_filter" value="Create New Filter"/>
+	<em>-or-</em> <input class="button" type="submit" name="atw_posts_duplicate_filter" value="Duplicate Current Filter"/></td></tr></table>
 <?php
 
 	$time = date('Y-m-d-Hi');
@@ -176,6 +177,7 @@ function atw_posts_select_filter() {
 atw_posts_nonce_field('atw_posts_set_to_filter');
 atw_posts_nonce_field('atw_posts_delete_filter');
 atw_posts_nonce_field('atw_posts_new_filter');
+atw_posts_nonce_field('atw_posts_duplicate_filter');
 atw_posts_nonce_field('atw_posts_restore_filter');
 
 }
@@ -593,8 +595,7 @@ atw_posts_nonce_field('atw_posts_add_date');
 ?>
     </div>
 <div class="filter-description">
-    You can specify a pre-defined date range of posts to display. If you need to specify other date options, see the WordPress WP_Query help page, and
-    add specific date values using the "Custom WP_Query Args" section below.
+    You can specify a pre-defined date range of posts to display. If you need to specify other date options, see the WordPress WP_Query help page, and add specific date values using the "Custom WP_Query Args" section below.
 </div>
 <div style="clear:both;"></div>
 
