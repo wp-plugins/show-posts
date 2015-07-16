@@ -142,7 +142,7 @@ function atw_posts_submits() {
         atw_slider_submits();
     }
 
-    $actions = array('atw_posts_new_filter', 'atw_posts_delete_filter',
+    $actions = array('atw_posts_new_filter', 'atw_posts_delete_filter', 'atw_posts_duplicate_filter',
                      'atw_posts_add_post_type', 'atw_posts_add_category_name', 'atw_posts_add_tag', 'atw_posts_add_author',
                      'atw_posts_add_date', 'atw_posts_add_group', 'atw_posts_hide_category_name',
 
@@ -250,7 +250,7 @@ function atw_posts_set_to_filter() {
     // Validate
     $filters = atw_posts_getopt('filters');
     $found = false;
-    foreach ($filters as $filter => $val) {     // display dropdown of available filters
+    foreach ($filters as $filter => $val) {     //  available filters
 		if (!isset($filter) || $filter == '') {
 
 		}
@@ -291,6 +291,32 @@ function atw_posts_delete_filter() {
     }
 
     atw_posts_delete_filter_opts($selected);
+    return true;
+}
+
+
+function atw_posts_duplicate_filter() {
+	$name = sanitize_text_field( atw_posts_get_POST ( 'filter_name' ) );
+    $slug = sanitize_title_with_dashes($name);
+    if ( $name == '' ) {
+        atw_posts_error_msg('Please provide a name for the new filter.');
+        return true;
+    }
+
+
+	$current_filter = atw_posts_getopt('current_filter');
+	global $atw_posts_opts_cache;
+	$cur_opts = $atw_posts_opts_cache['filters'][$current_filter];
+
+    atw_posts_setopt('current_filter', $slug);
+	$atw_posts_opts_cache['filters'][$slug] = $cur_opts;
+
+    atw_posts_set_filter_opt( 'name', $name);
+    atw_posts_set_filter_opt( 'slug', $slug);
+
+	$new_opts = $cur_opts = $atw_posts_opts_cache['filters'][$slug];
+
+    atw_posts_save_msg('Filter Duplicated: "' . $name . '" (Slug: <em>' . $slug . '</em>)');
     return true;
 }
 

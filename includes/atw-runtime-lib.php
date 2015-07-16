@@ -123,7 +123,7 @@ function atw_posts_get_qargs( $args, $opts ) {
                 $qargs['year'] = date('Y');
                 break;
             case 'past-365d':
-                $qargs['date_query'] = array ( array ('column' => 'post_date_gmt','after'=>'1 month ago'));
+                $qargs['date_query'] = array ( array ('column' => 'post_date_gmt','after'=>'1 year ago'));
                 break;
             default:
                 break;
