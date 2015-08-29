@@ -58,6 +58,9 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.3.1 =
+* Tweaks for compatibility with the_content and some other themes
+
 = 1.3 =
 * Update to WP 4.3 compatibility (no changes)
 

@@ -192,7 +192,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
 					echo ('<div class="content-3-col atw-cf"' . $style . '>' . "\n");
                     atw_show_content( $slider, $filter );
                     echo ("</div> <!-- atw-content-3-col -->\n");
-                    
+
                     break;
                 case 1:
                 default:
@@ -269,6 +269,8 @@ function atw_show_content( $slider, $filter = '' ) {
 
     do_action('atw_show_sliders_post_pager', $slider);
 
+	atw_save_the_content_filters();
+
     if ( ( !atw_posts_getopt('ignore_aspen_weaver') && (atw_posts_is_wvrx() || atw_posts_is_aspen() || atw_posts_is_wii()) )
         || (atw_posts_getopt('use_native_theme_templates') && atw_posts_theme_has_templates())
        ) {
@@ -285,6 +287,7 @@ function atw_show_content( $slider, $filter = '' ) {
         if ( $sticky ) {
             echo '</div>';
         }
+		atw_restore_the_content_filters();
         return;
     }
 
@@ -293,6 +296,7 @@ function atw_show_content( $slider, $filter = '' ) {
 
         if ( $template != '' ) {
             atw_posts_do_template( $slider, $template );
+			atw_restore_the_content_filters();
             return;
         }
     }
@@ -345,6 +349,7 @@ function atw_show_content( $slider, $filter = '' ) {
 <?php
     if (atw_trans_get('show') == 'title') {
         echo '</article><!-- #post-' . get_the_ID() . '-->';
+		atw_restore_the_content_filters();
         return;
     }
 
@@ -358,6 +363,7 @@ function atw_show_content( $slider, $filter = '' ) {
 <?php
         }
         echo '</article><!-- #post-' . get_the_ID() . '-->';
+		atw_restore_the_content_filters();
         return;
     }
 
@@ -427,6 +433,26 @@ edit_post_link( __( 'Edit','atw-showposts'), '<span class="atw-edit-link">', '</
 	</article><!-- #post-<?php the_ID(); ?> -->
 
 <?php
+	atw_restore_the_content_filters();
+}
+
+function atw_save_the_content_filters() {
+	global $wp_filter;
+	if (!isset($wp_filter))
+		return;
+	$GLOBALS['atw_cf_temp'] = $wp_filter;
+	$tag = 'the_content';
+	// Strip filters with lower priority than shortcode to avoid processing content twice
+	$wp_filter[$tag] = array_slice($wp_filter[$tag], 0, array_search(key($wp_filter[$tag]), array_keys($wp_filter[$tag])) + 1, true);
+
+}
+
+function atw_restore_the_content_filters() {
+	global $wp_filter;
+	if (!isset($GLOBALS['atw_cf_temp']))
+		return;
+	$wp_filter = $GLOBALS['atw_cf_temp']; // Restore filter state
+	unset($GLOBALS['atw_cf_temp']);
 }
 
 // ====================================== >>> atw_show_post_content <<< ======================================
@@ -448,7 +474,7 @@ function atw_show_post_content( $slider ) {
         $image = wp_get_attachment_image_src( get_post_thumbnail_id( ), 'full' );        // (url, width, height)
         $href = $image[0];
         if ( !$href ) {
-            $content = get_the_content ( $more );
+            $content = get_the_content( $more );
         }
 
     }
@@ -462,8 +488,22 @@ function atw_show_post_content( $slider ) {
     } else if ( $content != '') {
         echo $content;
     } else {
-        the_content( $more );
+		// atw_show_post_the_content( $more );
+		atw_show_post_the_content( $more );
+
     }
 }
 
+// ====================================== >>> atw_show_post_content <<< ======================================
+function atw_show_post_the_content($more) {
+	// use this to support nested the_content filters - slight modification of the WP the_content()
+
+	$content = get_the_content( $more, false );
+
+	$content = do_shortcode( $content ); // try applying shortcodes before the_content filter
+
+	$content = apply_filters( 'the_content', $content );
+	//$content = str_replace( ']]>', ']]&gt;', $content );
+	echo $content;
+}
 ?>
