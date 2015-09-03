@@ -256,7 +256,7 @@ function atw_posts_argval( $arg ) {
 
 function atw_posts_edit_post() {
     $link = get_edit_post_link();
-    return'<span class="atw-edit-link"><a class="post-edit-link" href="' . esc_html($link) . '">' .  __( 'Edit','atw-showposts') . '</a></span>';
+    return'<span class="atw-edit-link"><a class="post-edit-link" href="' . esc_html($link) . '">' .  __( 'Edit','show-posts') . '</a></span>';
 }
 
 // ====================================== >>> atw_posts_entry_meta <<< ======================================
@@ -273,13 +273,13 @@ function atw_posts_entry_meta() {
     <span class="author vcard">
      <a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a>
     </span>
-   </span>','atw-showposts'),
+   </span>','show-posts'),
 		esc_url( get_permalink() ),
 		esc_attr( get_the_time() ),
 		esc_attr( get_the_date( 'c' ) ),
 		esc_html( get_the_date() ),
 		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-		sprintf( esc_attr(__( 'View all posts by %s','atw-showposts')), get_the_author() ),
+		sprintf( esc_attr(__( 'View all posts by %s','show-posts')), get_the_author() ),
 		esc_html( get_the_author() )
 	);
 
@@ -294,21 +294,21 @@ function atw_posts_entry_utility(  ) {
     $val =
         ' <footer class="atw-entry-utility"> <div class="atw-entry-meta-icons">' . "\n";
 
-    $categories_list = get_the_category_list( __( ', ','atw-showposts') );
+    $categories_list = get_the_category_list( __( ', ','show-posts') );
     if ( $categories_list ) {
         $val .= '  <span class="cat-links">' . $categories_list . " </span>\n";
     } // End if categories
 
-    $tags_list = get_the_tag_list( '', __( ', ','atw-showposts') );
+    $tags_list = get_the_tag_list( '', __( ', ','show-posts') );
     if ( $tags_list ) {
         $val .= '  <span class="tag-links">' . $tags_list . "  </span>\n";
     } // End if $tags_list
 
     if ( comments_open() ) {
 		$val .= ' <span class="comments-link">';
-        $val .= atw_posts_get_comments_popup_link( __( 'Leave a reply','atw-showposts'),
-                __( '<b>1</b> Reply','atw-showposts'),
-                __( '<b>%</b> Replies','atw-showposts'),
+        $val .= atw_posts_get_comments_popup_link( __( 'Leave a reply','show-posts'),
+                __( '<b>1</b> Reply','show-posts'),
+                __( '<b>%</b> Replies','show-posts'),
                 'leave-reply');
 
 		$val .= ' </span><div style="clear:both;"></div>';
@@ -330,7 +330,7 @@ function atw_posts_post_excerpt() {
 // ====================================== >>> atw_posts_post_title_link <<< ======================================
 
 function atw_posts_post_title_link() {
-    return '<a href="' . get_permalink() . '" title="' . sprintf( esc_attr(__( 'Permalink to %s','atw-showposts')),
+    return '<a href="' . get_permalink() . '" title="' . sprintf( esc_attr(__( 'Permalink to %s','show-posts')),
 	   the_title_attribute( 'echo=0' ) ). '" rel="bookmark">' .  get_the_title() . '</a>';
 }
 

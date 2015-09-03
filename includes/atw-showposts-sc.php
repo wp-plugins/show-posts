@@ -167,7 +167,7 @@ name with 'header_class=classname'. You can provide inline styling with 'header_
         // aspen_per_post_style();
         if ($show == 'titlelist') {
     ?>
-            <li><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr(__( 'Permalink to %s','atw-showposts')),
+            <li><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr(__( 'Permalink to %s','show-posts')),
            the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></li>
     <?php
         } else {
@@ -269,7 +269,7 @@ function atw_show_content( $slider, $filter = '' ) {
 
     do_action('atw_show_sliders_post_pager', $slider);
 
-	atw_save_the_content_filters();
+	$saved_the_content_filter_key = atw_save_the_content_filters();
 
     if ( ( !atw_posts_getopt('ignore_aspen_weaver') && (atw_posts_is_wvrx() || atw_posts_is_aspen() || atw_posts_is_wii()) )
         || (atw_posts_getopt('use_native_theme_templates') && atw_posts_theme_has_templates())
@@ -287,7 +287,7 @@ function atw_show_content( $slider, $filter = '' ) {
         if ( $sticky ) {
             echo '</div>';
         }
-		atw_restore_the_content_filters();
+		atw_restore_the_content_filters($saved_the_content_filter_key);
         return;
     }
 
@@ -313,7 +313,7 @@ function atw_show_content( $slider, $filter = '' ) {
 	if (!atw_trans_get('hide_title')) {		// ========== TITLE
 ?>
 	    <hgroup class="atw-entry-hdr"><h2 class="atw-entry-title">
-	    <a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr(__( 'Permalink to %s','atw-showposts')),
+	    <a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr(__( 'Permalink to %s','show-posts')),
 	   the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
 	   </h2></hgroup>
 
@@ -326,13 +326,13 @@ function atw_show_content( $slider, $filter = '' ) {
 		<div class="atw-entry-meta-icons">
 <?php
 
-    printf( __( '<span class="entry-date"><a href="%1$s" title="%2$s" rel="bookmark"><time datetime="%3$s" pubdate>%4$s</time></a></span> <span class="by-author"><span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>','atw-showposts'),
+    printf( __( '<span class="entry-date"><a href="%1$s" title="%2$s" rel="bookmark"><time datetime="%3$s" pubdate>%4$s</time></a></span> <span class="by-author"><span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>','show-posts'),
 		esc_url( get_permalink() ),
 		esc_attr( get_the_time() ),
 		esc_attr( get_the_date( 'c' ) ),
 		esc_html( get_the_date() ),
 		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-		sprintf( esc_attr(__( 'View all posts by %s','atw-showposts')), get_the_author() ),
+		sprintf( esc_attr(__( 'View all posts by %s','show-posts')), get_the_author() ),
 		esc_html( get_the_author() )
 	);
 
@@ -391,7 +391,7 @@ function atw_show_content( $slider, $filter = '' ) {
 	    <footer class="atw-entry-utility">
 		<div class="atw-entry-meta-icons">
 <?php
-		$categories_list = get_the_category_list( __( ', ','atw-showposts') );
+		$categories_list = get_the_category_list( __( ', ','show-posts') );
 		if ( $categories_list ) { ?>
 		    <span class="cat-links">
 <?php
@@ -400,7 +400,7 @@ function atw_show_content( $slider, $filter = '' ) {
 		    </span>
 <?php
 		} // End if categories
-		$tags_list = get_the_tag_list( '', __( ', ','atw-showposts') );
+		$tags_list = get_the_tag_list( '', __( ', ','show-posts') );
 		if ( $tags_list ) {
 ?>
 			<span class="tag-links">
@@ -414,9 +414,9 @@ function atw_show_content( $slider, $filter = '' ) {
 ?>
 		    <span class="comments-link">
 <?php
-		    comments_popup_link( __( 'Leave a reply','atw-showposts'),
-                __( '<b>1</b> Reply','atw-showposts'),
-                __( '<b>%</b> Replies','atw-showposts'),
+		    comments_popup_link( __( 'Leave a reply','show-posts'),
+                __( '<b>1</b> Reply','show-posts'),
+                __( '<b>%</b> Replies','show-posts'),
                 'leave-reply');
 ?>
 
@@ -428,7 +428,7 @@ function atw_show_content( $slider, $filter = '' ) {
 	    </footer><!-- .atw-entry-utility -->
 <?php
 }
-edit_post_link( __( 'Edit','atw-showposts'), '<span class="atw-edit-link">', '</span>' );
+edit_post_link( __( 'Edit','show-posts'), '<span class="atw-edit-link">', '</span>' );
 ?>
 	</article><!-- #post-<?php the_ID(); ?> -->
 
@@ -437,22 +437,26 @@ edit_post_link( __( 'Edit','atw-showposts'), '<span class="atw-edit-link">', '</
 }
 
 function atw_save_the_content_filters() {
-	global $wp_filter;
-	if (!isset($wp_filter))
-		return;
-	$GLOBALS['atw_cf_temp'] = $wp_filter;
-	$tag = 'the_content';
-	// Strip filters with lower priority than shortcode to avoid processing content twice
-	$wp_filter[$tag] = array_slice($wp_filter[$tag], 0, array_search(key($wp_filter[$tag]), array_keys($wp_filter[$tag])) + 1, true);
+	global $wp_filter, $wp_current_filter;
 
+    $tag = 'the_content';
+    if( empty( $wp_filter ) || empty( $wp_current_filter ) || !in_array( $tag, $wp_current_filter ) ){
+        return false;
+    }
+    return key( $wp_filter[ $tag ] );
 }
 
-function atw_restore_the_content_filters() {
+function atw_restore_the_content_filters( $key = false ) {
 	global $wp_filter;
-	if (!isset($GLOBALS['atw_cf_temp']))
-		return;
-	$wp_filter = $GLOBALS['atw_cf_temp']; // Restore filter state
-	unset($GLOBALS['atw_cf_temp']);
+    $tag = 'the_content';
+    if( $key !== false ){
+        reset( $wp_filter[ $tag ] );
+        while( key( $wp_filter[ $tag ] ) !== $key ){
+            if( next( $wp_filter[ $tag ] ) === false ){
+                break;
+            }
+        }
+    }
 }
 
 // ====================================== >>> atw_show_post_content <<< ======================================

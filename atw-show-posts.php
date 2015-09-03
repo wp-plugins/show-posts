@@ -5,7 +5,7 @@ Plugin URI: http://WeaverTheme.com
 Description: Weaver Show Posts - Show  posts or custom posts within your Theme's pages or posts using a shortcode and a form-based interface.
 Author: wpweaver
 Author URI: http://weavertheme.com/about/
-Version: 1.3.1
+Version: 1.3.2
 
 License: GPL
 
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* CORE FUNCTIONS
 */
 
-define ( 'WEAVER_SHOWPOSTS_VERSION','1.3.1');
+define ( 'WEAVER_SHOWPOSTS_VERSION','1.3.2');
 define ( 'WEAVER_SHOWPOSTS_MINIFY','.min');		// '' for dev, '.min' for production
 define ( 'WEAVER_SHOWPOSTS_TEMPLATE', false);      // future feature
 
@@ -62,12 +62,12 @@ function atw_posts_add_form_buttons(){
     $page = is_admin() ? get_current_screen() : null;
 
     if(  isset($page) && $page-> id!= 'atw_slider_post'  ) {
-        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-posts-dialog" class="thickbox button" id="add_atw_posts_posts" title="' . __("Add [show_posts]", 'atw-showposts') . '"><span class="dashicons dashicons-admin-post"></span> ' . __("Add [show_posts]", "atw-slider") . '</a>';
+        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-posts-dialog" class="thickbox button" id="add_atw_posts_posts" title="' . __("Add [show_posts]", 'show-posts') . '"><span class="dashicons dashicons-admin-post"></span> ' . __("Add [show_posts]", 'show-posts') . '</a>';
         add_action( 'admin_footer', 'atw_posts_select_posts_form' );
     }
 
     if ( function_exists( 'atw_slider_installed') && isset($page) && $page->id != 'atw_slider_post' ) {
-        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-sliders-dialog" class="thickbox button" id="add_atw_slider_slidrs" title="' . __("Add [show_slider]", 'atw-slider') . '"><span class="dashicons dashicons-images-alt"></span></span> ' . __("Add [show_slider]", "atw-slider") . '</a>';
+        echo '<a href="#TB_inline?width=400&height=300&inlineId=select-show-sliders-dialog" class="thickbox button" id="add_atw_slider_slidrs" title="' . __("Add [show_slider]", 'atw-slider') . '"><span class="dashicons dashicons-images-alt"></span></span> ' . __("Add [show_slider]", 'show-posts') . '</a>';
         add_action( 'admin_footer', 'atw_posts_select_slider_form' );
     }
 }
@@ -79,8 +79,8 @@ function atw_posts_select_posts_form() {
     atw_posts_select_scripts_and_styles();
 ?>
     <div id="select-show-posts-dialog" style="display:none">
-        <h3><?php _e('Insert [show_posts]', 'atw-showposts'); ?></h3>
-        <p><?php _e('Add a [show_posts filter=specify-filter-name] into this page/post', 'atw-showposts'); ?></p>
+        <h3><?php _e('Insert [show_posts]', 'show-posts'); ?></h3>
+        <p><?php _e('Add a [show_posts filter=specify-filter-name] into this page/post', 'show-posts'); ?></p>
 <?php
     $filters = atw_posts_getopt('filters');
 
@@ -106,8 +106,8 @@ function atw_posts_select_slider_form() {
     atw_posts_select_scripts_and_styles();
 ?>
     <div id="select-show-sliders-dialog" style="display:none">
-        <h3><?php _e('Insert [show_slider]', 'atw-showposts'); ?></h3>
-        <p><?php _e('Add a [show_slider name=specify-slider-name] into this page/post', 'atw-showposts'); ?></p>
+        <h3><?php _e('Insert [show_slider]', 'show-posts'); ?></h3>
+        <p><?php _e('Add a [show_slider name=specify-slider-name] into this page/post', 'show-posts'); ?></p>
 <?php
     $sliders = atw_posts_getopt('sliders');
 
