@@ -296,7 +296,7 @@ function atw_show_content( $slider, $filter = '' ) {
 
         if ( $template != '' ) {
             atw_posts_do_template( $slider, $template );
-			atw_restore_the_content_filters();
+			atw_restore_the_content_filters($saved_the_content_filter_key);
             return;
         }
     }
@@ -349,7 +349,7 @@ function atw_show_content( $slider, $filter = '' ) {
 <?php
     if (atw_trans_get('show') == 'title') {
         echo '</article><!-- #post-' . get_the_ID() . '-->';
-		atw_restore_the_content_filters();
+		atw_restore_the_content_filters($saved_the_content_filter_key);
         return;
     }
 
@@ -363,7 +363,7 @@ function atw_show_content( $slider, $filter = '' ) {
 <?php
         }
         echo '</article><!-- #post-' . get_the_ID() . '-->';
-		atw_restore_the_content_filters();
+		atw_restore_the_content_filters($saved_the_content_filter_key);
         return;
     }
 
@@ -433,7 +433,7 @@ edit_post_link( __( 'Edit','show-posts'), '<span class="atw-edit-link">', '</spa
 	</article><!-- #post-<?php the_ID(); ?> -->
 
 <?php
-	atw_restore_the_content_filters();
+	atw_restore_the_content_filters($saved_the_content_filter_key);
 }
 
 function atw_save_the_content_filters() {

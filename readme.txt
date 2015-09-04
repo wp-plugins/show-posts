@@ -9,7 +9,7 @@ Tags: weaver theme, settings, save, subthemes
 Text Domain: show-posts
 Requires at least: 3.6
 Tested up to: 4.3
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
 == Description ==
 
@@ -59,6 +59,9 @@ Please use the WordPress Plugins:Install page to install this plugin.
 
 
 == Changelog ==
+= 1.3.3 =
+* Fix: 1.3.2 tweak was incorrect, fixed
+
 = 1.3.2 =
 * Tweak: better the_content compatibility
 * Change: text domain changed to 'show-posts'
